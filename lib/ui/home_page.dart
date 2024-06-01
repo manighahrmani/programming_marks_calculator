@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../backend/marks_calculator.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -46,7 +48,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Programming Marks Calculator'),
+        title: const Text('Programming Marks Calculator'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -61,14 +63,14 @@ class _HomePageState extends State<HomePage> {
             _buildTextField(_cw2Controller, 'Coursework 2'),
             _buildTextField(_ex1Controller, 'Exam 1'),
             _buildTextField(_ex2Controller, 'Exam 2'),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _calculateMarks,
-              child: Text('Calculate'),
+              child: const Text('Calculate'),
             ),
             Text(
               _resultMessage,
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
               textAlign: TextAlign.center,
             ),
           ],

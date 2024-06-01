@@ -24,23 +24,21 @@ class _HomePageState extends State<HomePage> {
 
   void _calculateMarks() {
     final marks = {
-      'ic1': int.tryParse(_ic1Controller.text) ?? 0,
-      'ic2': int.tryParse(_ic2Controller.text) ?? 0,
-      'ic3': int.tryParse(_ic3Controller.text) ?? 0,
-      'ic4': int.tryParse(_ic4Controller.text) ?? 0,
-      'ic5': int.tryParse(_ic5Controller.text) ?? 0,
-      'cw1': int.tryParse(_cw1Controller.text) ?? 0,
-      'cw2': int.tryParse(_cw2Controller.text) ?? 0,
-      'ex1': int.tryParse(_ex1Controller.text) ?? 0,
-      'ex2': int.tryParse(_ex2Controller.text) ?? 0,
+      'In-class test 1': int.tryParse(_ic1Controller.text) ?? 0,
+      'In-class test 2': int.tryParse(_ic2Controller.text) ?? 0,
+      'In-class test 3': int.tryParse(_ic3Controller.text) ?? 0,
+      'In-class test 4': int.tryParse(_ic4Controller.text) ?? 0,
+      'In-class test 5': int.tryParse(_ic5Controller.text) ?? 0,
+      'Coursework 1': int.tryParse(_cw1Controller.text) ?? 0,
+      'Coursework 2': int.tryParse(_cw2Controller.text) ?? 0,
+      'Exam 1': int.tryParse(_ex1Controller.text) ?? 0,
+      'Exam 2': int.tryParse(_ex2Controller.text) ?? 0,
     };
-
     final calculator = MarksCalculator();
     final totalMarks = calculator.calculateTotalMarks(marks);
     final message = calculator.getMessage(totalMarks);
-
     setState(() {
-      _resultMessage = "Total Marks: $totalMarks\n$message";
+      _resultMessage = message;
     });
   }
 

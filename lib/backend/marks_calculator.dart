@@ -2,15 +2,15 @@
 class MarksCalculator {
   // Calculate the total marks based on the given marks
   double calculateTotalMarks(Map<String, int> marks) {
-    int inClassTests = marks['ic1']! +
-        marks['ic2']! +
-        marks['ic3']! +
-        marks['ic4']! +
-        marks['ic5']!;
-    int exams = marks['ex1']! + marks['ex2']!;
+    int inClassTests = marks['In-class test 1']! +
+        marks['In-class test 2']! +
+        marks['In-class test 3']! +
+        marks['In-class test 4']! +
+        marks['In-class test 5']!;
+    int exams = marks['Exam 1']! + marks['Exam 2']!;
     double total = inClassTests * 0.05 +
-        marks['cw2']! * 0.25 +
-        marks['cw1']! * 0.20 +
+        marks['Coursework 2']! * 0.25 +
+        marks['Coursework 1']! * 0.20 +
         exams * 0.15;
     return total;
   }

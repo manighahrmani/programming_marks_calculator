@@ -10,33 +10,44 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final TextEditingController _ic1Controller = TextEditingController();
-  final TextEditingController _ic2Controller = TextEditingController();
-  final TextEditingController _ic3Controller = TextEditingController();
-  final TextEditingController _ic4Controller = TextEditingController();
-  final TextEditingController _ic5Controller = TextEditingController();
-  final TextEditingController _cw1Controller = TextEditingController();
-  final TextEditingController _cw2Controller = TextEditingController();
-  final TextEditingController _ex1Controller = TextEditingController();
-  final TextEditingController _ex2Controller = TextEditingController();
+  final Map<String, TextEditingController> _controllers = {
+    'In-class test 1': TextEditingController(),
+    'In-class test 2': TextEditingController(),
+    'In-class test 3': TextEditingController(),
+    'In-class test 4': TextEditingController(),
+    'In-class test 5': TextEditingController(),
+    'Coursework 1': TextEditingController(),
+    'Coursework 2': TextEditingController(),
+    'Exam 1': TextEditingController(),
+    'Exam 2': TextEditingController(),
+  };
 
   String _resultMessage = "";
 
   void _calculateMarks() {
-    final marks = {
-      'In-class test 1': int.tryParse(_ic1Controller.text) ?? 0,
-      'In-class test 2': int.tryParse(_ic2Controller.text) ?? 0,
-      'In-class test 3': int.tryParse(_ic3Controller.text) ?? 0,
-      'In-class test 4': int.tryParse(_ic4Controller.text) ?? 0,
-      'In-class test 5': int.tryParse(_ic5Controller.text) ?? 0,
-      'Coursework 1': int.tryParse(_cw1Controller.text) ?? 0,
-      'Coursework 2': int.tryParse(_cw2Controller.text) ?? 0,
-      'Exam 1': int.tryParse(_ex1Controller.text) ?? 0,
-      'Exam 2': int.tryParse(_ex2Controller.text) ?? 0,
-    };
-    final calculator = MarksCalculator();
-    final totalMarks = calculator.calculateTotalMarks(marks);
-    final message = calculator.getMessage(totalMarks);
+    Map<String, int> marks = {};
+    for (final entry in _controllers.entries) {
+      int? enteredValue = int.tryParse(entry.value.text);
+      if (enteredValue == null) {
+        setState(() {
+          _resultMessage = 'Mark entered for ${entry.key} is not a number';
+        });
+        return;
+      }
+      int mark = enteredValue;
+      if (mark < 0 || mark > 100) {
+        setState(() {
+          _resultMessage =
+              'Mark entered for ${entry.key} is not between 0 and 100';
+        });
+        return;
+      }
+      marks[entry.key] = mark;
+    }
+
+    final MarksCalculator calculator = MarksCalculator();
+    final double totalMark = calculator.calculateTotalMarks(marks);
+    final String message = calculator.getMessage(totalMark);
     setState(() {
       _resultMessage = message;
     });
@@ -44,6 +55,33 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> columnWidgets = [];
+    for (final entry in _controllers.entries) {
+      columnWidgets.add(
+        TextField(
+          controller: entry.value,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            labelText: entry.key,
+          ),
+        ),
+      );
+    }
+    columnWidgets.add(const SizedBox(height: 20));
+    columnWidgets.add(
+      ElevatedButton(
+        onPressed: _calculateMarks,
+        child: const Text('Calculate'),
+      ),
+    );
+    columnWidgets.add(
+      Text(
+        _resultMessage,
+        style: const TextStyle(fontSize: 18),
+        textAlign: TextAlign.center,
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Programming Marks Calculator'),
@@ -51,38 +89,8 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          children: [
-            _buildTextField(_ic1Controller, 'In-class test 1'),
-            _buildTextField(_ic2Controller, 'In-class test 2'),
-            _buildTextField(_ic3Controller, 'In-class test 3'),
-            _buildTextField(_ic4Controller, 'In-class test 4'),
-            _buildTextField(_ic5Controller, 'In-class test 5'),
-            _buildTextField(_cw1Controller, 'Coursework 1'),
-            _buildTextField(_cw2Controller, 'Coursework 2'),
-            _buildTextField(_ex1Controller, 'Exam 1'),
-            _buildTextField(_ex2Controller, 'Exam 2'),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _calculateMarks,
-              child: const Text('Calculate'),
-            ),
-            Text(
-              _resultMessage,
-              style: const TextStyle(fontSize: 18),
-              textAlign: TextAlign.center,
-            ),
-          ],
+          children: columnWidgets,
         ),
-      ),
-    );
-  }
-
-  Widget _buildTextField(TextEditingController controller, String label) {
-    return TextField(
-      controller: controller,
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        labelText: label,
       ),
     );
   }

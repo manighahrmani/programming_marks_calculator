@@ -11,15 +11,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final Map<String, TextEditingController> _controllers = {
-    'In-class test 1 (Item 1)': TextEditingController(),
-    'In-class test 2 (Item 2)': TextEditingController(),
-    'Coursework 1 (Item 3)': TextEditingController(),
-    'Exam 1 (Item 4)': TextEditingController(),
-    'In-class test 3 (Item 5)': TextEditingController(),
-    'Coursework 2 (Item 6))': TextEditingController(),
-    'In-class test 4 (Item 7)': TextEditingController(),
-    'In-class test 5 (Item 8)': TextEditingController(),
-    'Exam 2 (Item 9)': TextEditingController(),
+    '(Item 1) In-class test 1': TextEditingController(),
+    '(Item 2) In-class test 2': TextEditingController(),
+    '(Item 3) Coursework 1': TextEditingController(),
+    '(Item 4) Exam 1': TextEditingController(),
+    '(Item 5) In-class test 3': TextEditingController(),
+    '(Item 6) Coursework 2': TextEditingController(),
+    '(Item 7) In-class test 4': TextEditingController(),
+    '(Item 8) In-class test 5': TextEditingController(),
+    '(Item 9) Exam 2': TextEditingController(),
   };
 
   String _resultMessage = "";

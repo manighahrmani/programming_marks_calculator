@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    return Scaffold(
+    Widget scaffold = Scaffold(
       appBar: AppBar(
         title: const Text('Programming Marks Calculator'),
       ),
@@ -93,5 +93,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+
+    return  scaffold;
   }
 }

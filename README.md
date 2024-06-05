@@ -20,7 +20,10 @@ To run this app on your local machine, follow these steps:
    - Dart
    - Flutter
 
-4. Open the terminal in Visual Studio Code (`Ctrl+`` or `View -> Terminal`).
+4. Open the terminal in Visual Studio Code (`Ctrl+Shift+P` and type "Terminal: Create New Integrated Terminal") and navigate to the project directory:
+   ```
+   cd programming_marks_calculator
+   ```
 
 5. Run the following command to get the dependencies:
    ```

@@ -49,7 +49,7 @@ The app consists of three main parts:
 
 The UI communicates with the backend by passing the entered marks to the `MarksCalculator` class, which performs the calculations and returns the result. The data is kept separate in the `assessment_data.dart` file, promoting separation of concerns.
 
-## Hosting on Firebase
+## Hosting on Firebase (for free!)
 
 To host your Flutter app as a website on Firebase, follow these steps:
 

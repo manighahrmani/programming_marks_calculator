@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
     final String message = getMessage(totalMark);
 
     setState(() {
-      _resultMessage = message;
+      _resultMessage = "Your total marks is $totalMark%. $message";
     });
   }
 

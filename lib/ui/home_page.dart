@@ -52,9 +52,9 @@ class _HomePageState extends State<HomePage> {
       marks[entry.key] = mark;
     }
 
-    final MarksCalculator calculator = MarksCalculator();
-    final double totalMark = calculator.calculateTotalMarks(marks);
-    final String message = calculator.getMessage(totalMark);
+    final double totalMark = calculateTotalMarks(marks);
+    final String message = getMessage(totalMark);
+
     setState(() {
       _resultMessage = message;
     });

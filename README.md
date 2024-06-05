@@ -43,9 +43,9 @@ The app consists of three main parts:
 
 1. **Data**: The [`lib/data/assessment_data.dart`](https://github.com/manighahrmani/programming_marks_calculator/tree/main/lib/data/assessment_data.dart) file contains the data for the assessments and their corresponding weights.
 
-2. **UI**: The [`lib/ui/home_page.dart`](https://github.com/manighahrmani/programming_marks_calculator/tree/main/lib/ui/home_page.dart) file defines the user interface of the app. It includes text fields for entering marks and a button to calculate the total marks.
+2. **Backend**: The [`lib/backend/marks_calculator.dart`](https://github.com/manighahrmani/programming_marks_calculator/tree/main/lib/backend/marks_calculator.dart) file contains the logic for calculating the total marks based on the entered marks and the assessment weights.
 
-3. **Backend**: The [`lib/backend/marks_calculator.dart`](https://github.com/manighahrmani/programming_marks_calculator/tree/main/lib/backend/marks_calculator.dart) file contains the logic for calculating the total marks based on the entered marks and the assessment weights.
+3. **UI**: The [`lib/ui/home_page.dart`](https://github.com/manighahrmani/programming_marks_calculator/tree/main/lib/ui/home_page.dart) file defines the user interface of the app. It includes text fields for entering marks and a button to calculate the total marks.
 
 The UI communicates with the backend by passing the entered marks to the `MarksCalculator` class, which performs the calculations and returns the result. The data is kept separate in the `assessment_data.dart` file, promoting separation of concerns.
 

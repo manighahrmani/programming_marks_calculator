@@ -34,19 +34,14 @@ class _HomePageState extends State<HomePage> {
   void _calculateMarks() {
     Map<String, int> marks = {};
     for (final entry in _controllers.entries) {
-      int? enteredValue = int.tryParse(entry.value.text);
-      if (enteredValue == null) {
-        setState(() {
-          _resultMessage = 'Mark entered for ${entry.key} is not a number';
-        });
-        return;
-      }
-      int mark = enteredValue;
+      // If the user enters a non-integer value, the value will be set to 0.
+      int mark = int.tryParse(entry.value.text) ?? 0;
       if (mark < 0 || mark > 100) {
         setState(() {
           _resultMessage =
               'Mark entered for ${entry.key} is not between 0 and 100';
         });
+        // If the mark is invalid, we return early from the function.
         return;
       }
       marks[entry.key] = mark;

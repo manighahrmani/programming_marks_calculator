@@ -1,15 +1,11 @@
+import '../data/assessment_data.dart';
+
 class MarksCalculator {
   double calculateTotalMarks(Map<String, int> marks) {
-    int inClassTests = marks['In-class test 1']! +
-        marks['In-class test 2']! +
-        marks['In-class test 3']! +
-        marks['In-class test 4']! +
-        marks['In-class test 5']!;
-    int exams = marks['Exam 1']! + marks['Exam 2']!;
-    double total = inClassTests * 0.05 +
-        marks['Coursework 2']! * 0.25 +
-        marks['Coursework 1']! * 0.20 +
-        exams * 0.15;
+    double total = 0;
+    for (final entry in assessmentWeights.entries) {
+      total += marks[entry.key]! * entry.value;
+    }
     return total;
   }
 

@@ -97,6 +97,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Programming Marks Calculator'),
       ),
+      // Add padding to the body of the scaffold (space around the column).
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

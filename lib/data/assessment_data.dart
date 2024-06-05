@@ -1,4 +1,4 @@
-const Map<String, double> assessmentData = {
+const Map<String, double> assessmentWeights = {
   '(Item 1) In-class test 1': 0.05,
   '(Item 2) In-class test 2': 0.05,
   '(Item 3) Coursework 1': 0.20,

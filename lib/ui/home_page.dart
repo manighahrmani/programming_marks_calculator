@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // This syntax is known as `collection-for` in Dart.
+  // This syntax is known as "collection-for" in Dart.
   // For more info: https://dart.dev/language/collections#control-flow-operators
   final Map<String, TextEditingController> _controllers = {
     for (var assessment in assessmentWeights.keys)
@@ -58,24 +58,33 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> columnWidgets = [];
+
     for (final entry in _controllers.entries) {
+      // For each entry, we create a TextField widget.
+      // Keys are assessment names and values are the TextEditingControllers.
       columnWidgets.add(
         TextField(
           controller: entry.value,
           keyboardType: TextInputType.number,
+          // This property is used to customize the appearance of the TextField.
           decoration: InputDecoration(
             labelText: entry.key,
           ),
         ),
       );
     }
+
+    // SizedBox widget adds some space after the last TextField.
     columnWidgets.add(const SizedBox(height: 20));
+
     columnWidgets.add(
       ElevatedButton(
+        // The event handler for the button is the _calculateMarks function.
         onPressed: _calculateMarks,
         child: const Text('Calculate'),
       ),
     );
+
     columnWidgets.add(
       Text(
         _resultMessage,

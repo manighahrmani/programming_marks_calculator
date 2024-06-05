@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../backend/marks_calculator.dart';
+import '../data/assessment_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,17 +10,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // This syntax is known as `collection-for` in Dart.
+  // For more info: https://dart.dev/language/collections#control-flow-operators
   final Map<String, TextEditingController> _controllers = {
-    '(Item 1) In-class test 1': TextEditingController(),
-    '(Item 2) In-class test 2': TextEditingController(),
-    '(Item 3) Coursework 1': TextEditingController(),
-    '(Item 4) Exam 1': TextEditingController(),
-    '(Item 5) In-class test 3': TextEditingController(),
-    '(Item 6) Coursework 2': TextEditingController(),
-    '(Item 7) In-class test 4': TextEditingController(),
-    '(Item 8) In-class test 5': TextEditingController(),
-    '(Item 9) Exam 2': TextEditingController(),
+    for (var assessment in assessmentWeights.keys)
+      assessment: TextEditingController(),
   };
+
+  // Alternatively you can define the map in the initState method:
+  //
+  // final Map<String, TextEditingController> _controllers = {};
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   for (String name in assessmentWeights.keys) {
+  //     _controllers[name] = TextEditingController();
+  //   }
+  // }
 
   String _resultMessage = "";
 

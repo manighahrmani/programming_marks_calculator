@@ -57,6 +57,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // We create a list of widgets to be displayed in the column.
     final List<Widget> columnWidgets = [];
 
     for (final entry in _controllers.entries) {

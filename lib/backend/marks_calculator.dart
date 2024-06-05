@@ -1,6 +1,4 @@
-// lib/backend/marks_calculator.dart
 class MarksCalculator {
-  // Calculate the total marks based on the given marks
   double calculateTotalMarks(Map<String, int> marks) {
     int inClassTests = marks['In-class test 1']! +
         marks['In-class test 2']! +
@@ -15,7 +13,6 @@ class MarksCalculator {
     return total;
   }
 
-  // Determine the message based on the total marks
   String getMessage(double totalMarks) {
     if (totalMarks >= 40) {
       return "Congratulations, you have passed in the first attempt!";

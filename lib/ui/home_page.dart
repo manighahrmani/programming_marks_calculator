@@ -1,4 +1,3 @@
-// lib/ui/home_page.dart
 import 'package:flutter/material.dart';
 import '../backend/marks_calculator.dart';
 
@@ -94,6 +93,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    return  scaffold;
+    return scaffold;
   }
 }

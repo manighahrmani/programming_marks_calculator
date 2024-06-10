@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../backend/marks_calculator.dart';
-import '../data/assessment_data.dart';
+import '../data/data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

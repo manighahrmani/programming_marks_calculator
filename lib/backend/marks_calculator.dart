@@ -1,4 +1,4 @@
-import '../data/assessment_data.dart';
+import '../data/data.dart';
 
 double calculateTotalMarks(Map<String, int> marks) {
   double total = 0;

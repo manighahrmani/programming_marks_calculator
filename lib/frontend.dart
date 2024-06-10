@@ -13,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   // This syntax is known as "collection-for" in Dart.
   // For more info: https://dart.dev/language/collections#control-flow-operators
   final Map<String, TextEditingController> _controllers = {
-    for (var assessment in assessmentWeights.keys)
+    for (String assessment in assessmentWeights.keys)
       assessment: TextEditingController(),
   };
 

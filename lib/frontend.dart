@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'backend.dart';
-import 'data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,64 +9,92 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // This syntax is known as "collection-for" in Dart.
-  // For more info: https://dart.dev/language/collections#control-flow-operators
-  final Map<String, TextEditingController> _controllers = {
-    for (var assessment in assessmentWeights.keys)
-      assessment: TextEditingController(),
-  };
-
-  // Alternatively you can define the map in the initState method:
-  //
-  // final Map<String, TextEditingController> _controllers = {};
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   for (String name in assessmentWeights.keys) {
-  //     _controllers[name] = TextEditingController();
-  //   }
-  // }
-
+  // This map stores TextEditingControllers for each assessment
+  final Map<String, TextEditingController> _controllers = {};
   String _resultMessage = "";
+  bool _isLoading = true; // To show a loading indicator while fetching data
 
-  void _calculateMarks() {
+  // initState is called when the widget is first created
+  // We use it to initialize data that requires asynchronous operations
+  @override
+  void initState() {
+    super.initState();
+    _loadAssessmentNames();
+  }
+
+  // This function loads the assessment names asynchronously
+  Future<void> _loadAssessmentNames() async {
+    List<String> assessmentNames = await getAssessmentNames();
+    setState(() {
+      // Initialize TextEditingControllers for each assessment name
+      for (String name in assessmentNames) {
+        _controllers[name] = TextEditingController();
+      }
+      _isLoading = false; // Set loading to false after data is loaded
+    });
+  }
+
+  // This function calculates the total marks based on user input
+  Future<void> _calculateMarks() async {
     Map<String, int> marks = {};
+
+    // Gather marks from the input fields
     for (final entry in _controllers.entries) {
-      // If the user enters a non-integer value, the value will be set to 0.
       int mark = int.tryParse(entry.value.text) ?? 0;
       if (mark < 0 || mark > 100) {
         setState(() {
           _resultMessage =
               'Mark entered for ${entry.key} is not between 0 and 100';
         });
-        // If the mark is invalid, we return early from the function.
-        return;
+        return; // Return early if any mark is invalid
       }
       marks[entry.key] = mark;
     }
 
-    final double totalMark = calculateTotalMarks(marks);
+    // Calculate total marks and get the message
+    final double totalMark = await calculateTotalMarks(marks);
     final String message = getMessage(totalMark);
 
+    // Update the result message
     setState(() {
       _resultMessage = "Your total marks is $totalMark%. $message";
     });
   }
 
+  // dispose is called when the widget is removed from the widget tree
+  // We use it to clean up resources like TextEditingControllers
+  @override
+  void dispose() {
+    for (final controller in _controllers.values) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  // This method builds the UI of the app
   @override
   Widget build(BuildContext context) {
-    // We create a list of widgets to be displayed in the column.
+    if (_isLoading) {
+      // Show a loading indicator while data is being loaded
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Programming Marks Calculator'),
+        ),
+        body: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    // Create a list of widgets to display the input fields and button
     final List<Widget> columnWidgets = [];
 
+    // Add a TextField for each assessment
     for (final entry in _controllers.entries) {
-      // For each entry, we create a TextField widget.
-      // Keys are assessment names and values are the TextEditingControllers.
       columnWidgets.add(
         TextField(
           controller: entry.value,
           keyboardType: TextInputType.number,
-          // This property is used to customize the appearance of the TextField.
           decoration: InputDecoration(
             labelText: entry.key,
           ),
@@ -75,17 +102,18 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    // SizedBox widget adds some space after the last TextField.
+    // Add some space after the last TextField
     columnWidgets.add(const SizedBox(height: 20));
 
+    // Add a button to calculate the total marks
     columnWidgets.add(
       ElevatedButton(
-        // The event handler for the button is the _calculateMarks function.
         onPressed: _calculateMarks,
         child: const Text('Calculate'),
       ),
     );
 
+    // Add a Text widget to display the result message
     columnWidgets.add(
       Text(
         _resultMessage,
@@ -94,11 +122,11 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    Widget scaffold = Scaffold(
+    // Return the Scaffold containing the UI
+    return Scaffold(
       appBar: AppBar(
         title: const Text('Programming Marks Calculator'),
       ),
-      // Add padding to the body of the scaffold (space around the column).
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -106,7 +134,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-
-    return scaffold;
   }
 }

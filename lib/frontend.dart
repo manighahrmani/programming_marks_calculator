@@ -10,28 +10,33 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // This syntax is known as "collection-for" in Dart.
-  // For more info: https://dart.dev/language/collections#control-flow-operators
-  final Map<String, TextEditingController> _controllers = {
-    for (String assessment in assessmentWeights.keys)
-      assessment: TextEditingController(),
-  };
-
-  // Alternatively you can define the map in the initState method:
-  //
-  // final Map<String, TextEditingController> _controllers = {};
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   for (String name in assessmentWeights.keys) {
-  //     _controllers[name] = TextEditingController();
-  //   }
-  // }
-
+  Map<String, double>? _assessmentWeights = {};
+  final Map<String, TextEditingController> _controllers = {};
   String _resultMessage = "";
 
-  void _calculateMarks() {
+  // `initState` is the first method called when a stateful widget is created.
+  // It initializes the state variables or performs startup tasks. In our case:
+  // We call `_loadData` to load the assessment weights from the CSV file and
+  // set it to the value of the `_assessmentWeights` instance variable.
+  @override
+  void initState() {
+    // This call to `super.initState()` is necessary by default.
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    Map<String, double> weights = await loadAssessmentWeights();
+    // `setState` is called to update the state of instance variables.
+    setState(() {
+      _assessmentWeights = weights;
+      for (String assessment in _assessmentWeights!.keys) {
+        _controllers[assessment] = TextEditingController();
+      }
+    });
+  }
+
+  Future<void> _calculateMarks() async {
     Map<String, int> marks = {};
     for (final entry in _controllers.entries) {
       // If the user enters a non-integer value, the value will be set to 0.
@@ -47,7 +52,7 @@ class _HomePageState extends State<HomePage> {
       marks[entry.key] = mark;
     }
 
-    final double totalMark = calculateTotalMarks(marks);
+    final double totalMark = await calculateTotalMarks(marks);
     final String message = getMessage(totalMark);
 
     setState(() {
@@ -80,8 +85,11 @@ class _HomePageState extends State<HomePage> {
 
     columnWidgets.add(
       ElevatedButton(
-        // The event handler for the button is the _calculateMarks function.
-        onPressed: _calculateMarks,
+        // The event handler for the button is the `_calculateMarks` function.
+        // Since it is an asynchronous function, the event handler is an `async`
+        // lambda function that does not take any parameters (hence `()`).
+        // The lambda function then `await`s the result of `_calculateMarks`.
+        onPressed: () async => await _calculateMarks(),
         child: const Text('Calculate'),
       ),
     );

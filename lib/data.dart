@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:csv/csv.dart';
 
+// TODO: #1 Update documentation
 // This function reads the assessment weights from a CSV file in the assets.
 // It returns a Future object that will contain a map of assessment names and their weights.
 Future<Map<String, double>> loadAssessmentWeights() async {

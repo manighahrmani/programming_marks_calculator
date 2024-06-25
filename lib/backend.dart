@@ -1,8 +1,7 @@
 import 'data.dart';
 
-Future<double> calculateTotalMarks(Map<String, int> marks) async{
+double calculateTotalMarks(Map<String, int> marks) {
   double total = 0;
-  Map<String, double> assessmentWeights = await loadAssessmentWeights();
   for (final entry in assessmentWeights.entries) {
     total += marks[entry.key]! * entry.value;
   }
